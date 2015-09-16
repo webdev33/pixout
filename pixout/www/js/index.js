@@ -1,3 +1,3 @@
 function onLoad() {
-    initMap();
+    local();
 }
