@@ -3,4 +3,4 @@
   display:none;  
 }
 
-#map { height: 90%; }
+#map { width:300px; height: 620px; }

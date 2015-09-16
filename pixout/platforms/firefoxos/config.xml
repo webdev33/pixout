@@ -4,6 +4,12 @@
         <icon height="128" src="icon/icon-128.png" width="128" />
         <icon height="60" src="icon/icon-60.png" width="60" />
     </platform>
+    <feature name="Camera">
+        <param name="firefoxos-package" value="Camera" />
+    </feature>
+    <preference name="AndroidPersistentFileLocation" value="Internal" />
+    <permission name="systemXHR" privileged="true" />
+    <permission description="Required for accessing user location." name="geolocation" />
     <name>HelloCordova</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
@@ -19,10 +25,4 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
-    <feature name="Camera">
-        <param name="firefoxos-package" value="Camera" />
-    </feature>
-    <preference name="AndroidPersistentFileLocation" value="Internal" />
-    <permission name="systemXHR" privileged="true" />
-    <permission description="Required for accessing user location." name="geolocation" />
 </widget>

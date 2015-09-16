@@ -1,4 +1,4 @@
-var map;
+﻿var map;
 var icon;
 var linedata;
 var line;
