@@ -1,0 +1,56 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {
+            "config.xml": {
+                "parents": {
+                    "/*": [
+                        {
+                            "xml": "<feature name=\"Camera\"><param name=\"firefoxos-package\" value=\"Camera\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<preference name=\"AndroidPersistentFileLocation\" value=\"Internal\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<permission name=\"systemXHR\" privileged=\"true\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<permission description=\"Required for accessing user location.\" name=\"geolocation\" />",
+                            "count": 1
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "installed_plugins": {
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        },
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        },
+        "cordova-plugin-file-transfer": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        },
+        "cordova-plugin-geolocation": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        },
+        "cordova-plugin-media": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        },
+        "cordova-plugin-media-capture": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        }
+    },
+    "dependent_plugins": {}
+}
