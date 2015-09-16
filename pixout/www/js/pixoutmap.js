@@ -1,35 +1,56 @@
-var map;
-var icon;
-var linedata;
-var line;
+var POMap = {
+    map: null,
+    places: [],
+    icon: null,
 
-function initMap() {
-    map = L.map('map', {
-        center: [48.85, 2.45],
-        zoom: 13
-    });
+    init: function() {
+        this.map = L.map('map', {
+            center: [48.39, 2.45],
+            zoom: 12
+        });
 
-    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png?{foo}', { foo: 'bar' }).addTo(map);
+        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {}).addTo(this.map);
 
-    icon = L.icon({ iconUrl: "icone.png", iconeSize: [24, 24] });
-    linedata = Array();
-    line = L.polyline(linedata, { color: 'red' }).addTo(map);
+        this.icon = L.icon({ iconUrl: "img/icone.png", iconeSize: [24, 24] });
+    },
 
-    map.addEventListener("click", addPoint);
+    addPoint: function (name, latlng, url) {
+        this.places.push(new POPlace(name, latlng, url));
+        L.marker(latlng, { icon: this.icon }).addTo(this.map);
+    },
 
+    addEventHandler: function(event, handler) {
+        this.map.addEventListener(event, handler);
+    },
+    removeEventHandler: function(event, handler) {
+        this.map.removeEventListener(event, handler);
+    },
 
-    L.Routing.control({
-        router: L.Routing.osrm({ serviceUrl:"http://router.project-osrm.org/viaroute"} ),
-        waypoints: [
-          L.latLng(48.40, 2.3),
-          L.latLng(48.90, 2.6)
-        ]
-    }).addTo(map);
-}
+    addTrip: function (beginning, end) {
+        var waypoints = [beginning];
+        var p;
+        var lat, lng;
+        for (var i = 0; i < this.places.length; i++) {
+            lat = this.places[i].latlng[0];
+            lng = this.places[i].latlng[1];
+            if (((beginning.lat < lat && lat < end.lat) || (beginning.lat > lat && lat > end.lat)) && ((beginning.lng < lng && lng < end.lng) || (beginning.lng > lng && lng > end.lng)))
+                waypoints.push(this.places[i].latlng);
+        }
+        waypoints.push(end);
 
-function addPoint(e) {
+        L.Routing.control({
+            router: L.Routing.osrm({ serviceUrl: "http://router.project-osrm.org/viaroute" }),
+            waypoints: waypoints
+        }).addTo(this.map);
+    }
+};
+
+/*
+        linedata = Array();
+        line = L.polyline(linedata, { color: 'red' }).addTo(this.map);
+
     L.marker(e.latlng, { icon: icon }).bindPopup(photo, {}).addTo(map);
     linedata.push(e.latlng);
     line.addLatLng(e.latlng);
-}
+*/
 
