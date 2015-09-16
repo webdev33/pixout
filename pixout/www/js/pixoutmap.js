@@ -44,13 +44,13 @@ function initMap(position) {
     map.addEventListener("click", addPoint);
 
 
-    /*L.Routing.control({
+    L.Routing.control({
         router: L.Routing.osrm({ serviceUrl:"http://router.project-osrm.org/viaroute"} ),
         waypoints: [
           L.latLng(48.40, 2.3),
           L.latLng(48.90, 2.6)
         ]
-    }).addTo(map);*/
+    }).addTo(map);
 }
 
 function addPoint(e) {
@@ -58,4 +58,3 @@ function addPoint(e) {
     linedata.push(e.latlng);
     line.addLatLng(e.latlng);
 }
-

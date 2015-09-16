@@ -18,15 +18,27 @@ function takePicture() {
     targetWidth: 100,
     targetHeight: 100,
     popoverOptions: CameraPopoverOptions,
-    saveToPhotoAlbum: true
+    saveToPhotoAlbum: true,
   });
 }
 
 function onSuccess(imageData) {
     var image = document.getElementById('myImage');
     image.src = "data:image/jpeg;base64," + imageData;
+    navigator.geolocation.getCurrentPosition(onSuccessLocation, onErrorLocation);
 }
 
 function onFail(message) {
     alert('Failed because: ' + message);
+}
+
+var onSuccessLocation = function(position) {
+  var position = [position.coords.latitude, position.coords.longitude];
+
+  alert('latitude: ' + position[0] + ' et longitude: ' + position[1]);
+};
+
+function onErrorLocation(error) {
+    alert('code: '    + error.code    + '\n' +
+          'message: ' + error.message + '\n');
 }
