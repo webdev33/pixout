@@ -34,19 +34,19 @@
         </nav>
    </div> <!--content-->
    <script>
-       
-       var circle = document.getElementById("circle-go");
-       var camera;
-       
-       circle.onclick = changePage;
-       
-       function changePage() {
-           circle.id = "circle-camera";
-           document.getElementById("text-button").innerHTML = "STOP";
-           document.getElementById("icon-profil").id = "icon-stop";
-           camera = document.getElementById("circle-camera");
-       }
-       
+     
+    var circle = document.getElementById("circle-go");
+    circle.onclick = changePageGo;
+
+    function changePageGo() {
+        circle.id = "circle-camera";
+        document.getElementById("text-button").innerHTML = "STOP";
+        document.getElementById("icon-profil").id = "icon-stop";
+        camera = document.getElementById("circle-camera");
+        circle.removeAttribute("onclick");
+        camera.onclick = takePicture;
+    }
+    
    </script>
 </body>
 </html>
