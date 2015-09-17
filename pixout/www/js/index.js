@@ -21,7 +21,6 @@ function onDeviceReady() {
         alert("Votre navigateur ne prend pas en compte la géolocalisation HTML5");
         POMap.init([48.3, 2.4]);
     }
-    //    POMap.addPoint("test", [48.31, 2.42], "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQE..........ASABIAAD/2wAGADABg D//Z");
 }
 
 function localized(position) {
