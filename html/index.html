@@ -11,9 +11,34 @@
    
    <div class="content">
        <div class="logo"></div>
+       
+       <div id="hidden">
+           <div class="recap-itineraire"></div>
+
+           <div class="img-contener">
+              <div class="action action-cancel"></div>
+              <div class="action action-validate"></div>
+               <img src="img/1.jpg" class="img">
+           </div>
+
+             <div class="img-contener">
+              <div class="action action-cancel"></div>
+              <div class="action action-validate"></div>
+                 <img src="img/2.png" class="img">
+           </div>
+           <div class="img-contener">
+              <div class="action action-cancel"></div>
+              <div class="action action-validate"></div>
+               <img src="img/3.jpg" class="img">
+           </div>
+
+           <div class="last"></div>
+       
+       </div> <!--hidden-->
+       
        <nav>
           <a href="#">
-               <div class="bouton profil">
+               <div id="bouton-left" class="bouton">
                   <div class="click click-left">
                        <div id ="icon-profil" class="icon"></div>
                        <h2 id="text-button">PROFIL</h2>
@@ -24,7 +49,7 @@
                <div class="circle" id="circle-go"></div>
            </a>
            <a href="#">
-               <div class="bouton itineraire">
+               <div id="bouton-right" class="bouton">
                   <div class="click click-right">
                        <div class="icon icon-itineraire"></div>
                        <h2>ITINERAIRE</h2>
@@ -36,15 +61,41 @@
    <script>
      
     var circle = document.getElementById("circle-go");
+    var whatPage = 1;
+    var icon = document.getElementById("bouton-left");
+       
     circle.onclick = changePageGo;
+    icon.onclick = actionLeft;
 
     function changePageGo() {
         circle.id = "circle-camera";
         document.getElementById("text-button").innerHTML = "STOP";
         document.getElementById("icon-profil").id = "icon-stop";
+        whatPage = 2;
         camera = document.getElementById("circle-camera");
         circle.removeAttribute("onclick");
-        camera.onclick = takePicture;
+        camera.onclick = truc;
+    }
+       
+    function actionLeft() {
+        if (whatPage == 2) {
+            document.getElementById('icon-stop').id = "icon-cancel";
+            document.getElementById("text-button").innerHTML = "ANNULER";
+            document.getElementById("hidden").id = "visible";
+            circle.id = "circle-upload";
+            whatPage = 3;
+        }
+        else if (whatPage == 3) {
+            document.getElementById("visible").id = "hidden";
+            document.getElementById("icon-cancel").id = "icon-profil";
+            document.getElementById("text-button").innerHTML = "PROFIL";
+            circle.id = "circle-go";
+            whatPage = 1;
+        }
+    }
+       
+    function truc() {
+        return;
     }
     
    </script>
