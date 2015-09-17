@@ -4,21 +4,21 @@ var POMap = {
     icon: null,
 
     init: function(center) {
-         this.map = L.map('map', {
+        this.map = L.map('map', {
             center: center,
-            zoom: 13
+            zoom: 12
         });
+
+        this.map.zoomControl.setPosition("topright");
 
         L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {}).addTo(this.map);
 
         this.icon = L.icon({ iconUrl: "css/images/map-512.png", iconeSize: [16, 16] });
-        L.marker(center, { icon: this.icon }).addTo(this.map);
     },
 
     addPoint: function (name, latlng, url) {
         this.places.push(new POPlace(name, latlng, url));
-        icon = L.icon({ iconUrl: url, iconeSize: [16, 16] });
-        L.marker(latlng, { icon: icon }).addTo(this.map);
+        L.marker(latlng, { icon: this.icon }).addEventListener("click", this.markerClickHandler).bindPopup(document.getElementById("photo")).addTo(this.map).url = url;
     },
 
     addEventHandler: function(event, handler) {
@@ -26,6 +26,10 @@ var POMap = {
     },
     removeEventHandler: function(event, handler) {
         this.map.removeEventListener(event, handler);
+    },
+
+    markerClickHandler:function(e) {
+        document.getElementById("photo").src = e.target.url;
     },
 
     addTrip: function (beginning, end) {
@@ -55,4 +59,3 @@ var POMap = {
     line.addLatLng(e.latlng);
 <<<<<<< HEAD
         */
-

@@ -8,18 +8,17 @@ var POMap = {
             center: center,
             zoom: 12
         });
-        
+
         this.map.zoomControl.setPosition("topright");
 
         L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {}).addTo(this.map);
 
         this.icon = L.icon({ iconUrl: "css/images/map-512.png", iconeSize: [16, 16] });
-        this.popup = L.popup(photo);
     },
 
     addPoint: function (name, latlng, url) {
         this.places.push(new POPlace(name, latlng, url));
-        L.marker(latlng, { icon: this.icon }).addEventListener("click", this.markerClickHandler).bindPopup(this.popup).addTo(this.map).url = url;
+        L.marker(latlng, { icon: this.icon }).addEventListener("click", this.markerClickHandler).bindPopup(document.getElementById("photo")).addTo(this.map).url = url;
     },
 
     addEventHandler: function(event, handler) {
@@ -30,7 +29,7 @@ var POMap = {
     },
 
     markerClickHandler:function(e) {
-        document.getElementById("photo").src = e.originalEvent.currentTarget.popup;
+        document.getElementById("photo").src = e.target.url;
     },
 
     addTrip: function (beginning, end) {
@@ -60,4 +59,3 @@ var POMap = {
     line.addLatLng(e.latlng);
 <<<<<<< HEAD
         */
-
