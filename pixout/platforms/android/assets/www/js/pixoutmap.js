@@ -14,7 +14,7 @@ var POMap = {
 
         L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {}).addTo(this.map);
 
-        this.icon = L.icon({ iconUrl: "css/images/map-512.png", iconeSize: [16, 16] });
+        this.icon = L.icon({ iconUrl: "css/images/map-512.png", iconeSize: [32, 32] });
         this.popup = L.popup().setContent(document.createElement("IMG"));
     },
 
