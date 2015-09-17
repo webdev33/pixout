@@ -7,7 +7,7 @@ var POMap = {
          this.map = L.map('map', {
             center: center,
             zoom: 12
-        });
+        }).zoomControl.setPosition("topright");
 
         L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {}).addTo(this.map);
 
