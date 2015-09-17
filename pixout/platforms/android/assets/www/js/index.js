@@ -15,6 +15,18 @@ else{
 
 function onDeviceReady() {
     //console.log("ready");
+    var circle = document.getElementById("circle-go");
+    circle.onclick = changePage;
+
+    function changePage() {
+        circle.id = "circle-camera";
+        document.getElementById("text-button").innerHTML = "STOP";
+        document.getElementById("icon-profil").id = "icon-stop";
+        camera = document.getElementById("circle-camera");
+        circle.removeAttribute("onclick");
+        camera.onclick = takePicture;
+    }
+
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(localized, locerreur, {enableHighAccuracy: true});
     } else {
