@@ -60,8 +60,6 @@ function takePicture() {
 }
 
 function onSuccess(imageData) {
-    image = document.getElementById('myImage');
-    image.src = "data:image/jpeg;base64," + imageData;
     image = "data:image/jpeg;base64," + imageData;
     console.log(storage);
     navigator.geolocation.getCurrentPosition(onSuccessLocation, onErrorLocation);
