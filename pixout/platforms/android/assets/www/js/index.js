@@ -1,4 +1,7 @@
 document.addEventListener("deviceready", onDeviceReady, false);
+var image;
+var position;
+var storage;
 
 function onLoad() {
     local();
@@ -6,6 +9,18 @@ function onLoad() {
 
 function onDeviceReady() {
     //console.log("ready");
+		if(typeof(window.localStorage) != 'undefined'){
+			storage = window.localStorage.getItem("photos");
+      if(typeof(storage) == 'undefined'){
+			  window.localStorage.setItem("photos", []);
+      }
+      else {
+    		throw "photos already defined";
+      }
+		}
+		else{
+			throw "window.localStorage, not defined";
+		}
 }
 
 function takePicture() {
@@ -23,7 +38,7 @@ function takePicture() {
 }
 
 function onSuccess(imageData) {
-    var image = document.getElementById('myImage');
+    image = document.getElementById('myImage');
     image.src = "data:image/jpeg;base64," + imageData;
     navigator.geolocation.getCurrentPosition(onSuccessLocation, onErrorLocation);
 }
@@ -33,12 +48,13 @@ function onFail(message) {
 }
 
 var onSuccessLocation = function(position) {
-  var position = [position.coords.latitude, position.coords.longitude];
-  alert(position[0] + 'et' + position[1]);
+  position = [position.coords.latitude, position.coords.longitude];
+  alert('latitude: ' + position[0] + ' et longitude: ' + position[1]);
+  storage.push([position, image]);
+  window.localStorage.setItem("photos",storage);
+  console.log(storage[0][1]);
 };
 
-// onError Callback receives a PositionError object
-//
 function onErrorLocation(error) {
     alert('code: '    + error.code    + '\n' +
           'message: ' + error.message + '\n');
