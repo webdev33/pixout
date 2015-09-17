@@ -3,26 +3,23 @@ var image;
 var position;
 var storage;
 
+
+if(typeof(window.localStorage) != 'undefined'){
+  storage = JSON.parse(window.localStorage.getItem("photos"));
+  if(!storage){
+    storage = [];
+  }
+}
+else{
+  storage = [];
+}
+
 function onLoad() {
     local();
 }
 
 function onDeviceReady() {
     //console.log("ready");
-		if(typeof(window.localStorage) != 'undefined'){
-			storage = window.localStorage.getItem("photos");
-      if(typeof(storage) == 'undefined'){
-			  window.localStorage.setItem("photos", []);
-      }
-      else {
-        image = document.getElementById('myImage');
-        image.src = "data:image/jpeg;base64," + imageData;
-    		throw "photos already defined";
-      }
-		}
-		else{
-			throw "window.localStorage, not defined";
-		}
 }
 
 function takePicture() {
@@ -42,6 +39,8 @@ function takePicture() {
 function onSuccess(imageData) {
     image = document.getElementById('myImage');
     image.src = "data:image/jpeg;base64," + imageData;
+    image = "data:image/jpeg;base64," + imageData;
+    console.log(storage);
     navigator.geolocation.getCurrentPosition(onSuccessLocation, onErrorLocation);
 }
 
@@ -51,13 +50,16 @@ function onFail(message) {
 
 var onSuccessLocation = function(position) {
   position = [position.coords.latitude, position.coords.longitude];
-  alert('latitude: ' + position[0] + ' et longitude: ' + position[1]);
+  console.log('latitude: ' + position[0] + ' et longitude: ' + position[1]);
+  if (!storage) {
+    storage = [];
+    console.log("coin");
+  }
   storage.push([position, image]);
-  window.localStorage.setItem("photos",storage);
-  console.log(storage[0][1]);
+  window.localStorage.setItem("photos",JSON.stringify(storage));
 };
 
 function onErrorLocation(error) {
-    alert('code: '    + error.code    + '\n' +
+    console.log('code: '    + error.code    + '\n' +
           'message: ' + error.message + '\n');
 }
