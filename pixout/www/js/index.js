@@ -3,7 +3,6 @@ var image;
 var position;
 var storage;
 
-
 if(typeof(window.localStorage) != 'undefined'){
   storage = JSON.parse(window.localStorage.getItem("photos"));
   if(!storage){
@@ -14,12 +13,37 @@ else{
   storage = [];
 }
 
-function onLoad() {
-    local();
-}
-
 function onDeviceReady() {
     //console.log("ready");
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(localized, locerreur, {enableHighAccuracy: true});
+    } else {
+        alert("Votre navigateur ne prend pas en compte la géolocalisation HTML5");
+        POMap.init([48.3, 2.4]);
+    }
+    //    POMap.addPoint("test", [48.31, 2.42], "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQE..........ASABIAAD/2wAGADABg D//Z");
+}
+
+function localized(position) {
+  POMap.init([position.coords.latitude, position.coords.longitude]);
+}
+
+function locerreur(error) {
+    switch (error.code) {
+    case error.UNKNOWN_ERROR:
+        alert("La geolocation a rencontré une erreur.");
+        break;
+    case error.PERMISSION_DENIED:
+        alert("Vous n'avez pas autorisé l'accès à votre position.");
+        break;
+    case error.POSITION_UNAVAILABLE:
+        alert("Vous n'avez pas pu être localisé.");
+        break;
+    case error.TIMEOUT:
+        alert("La geolocation prend trop de temps.");
+        break;
+    }
+    POMap.init([48.3, 2.4]);
 }
 
 function takePicture() {
@@ -57,6 +81,7 @@ var onSuccessLocation = function(position) {
   }
   storage.push([position, image]);
   window.localStorage.setItem("photos",JSON.stringify(storage));
+  POMap.addPoint("Marqueur", position, image);
 };
 
 function onErrorLocation(error) {

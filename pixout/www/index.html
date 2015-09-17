@@ -28,6 +28,7 @@
             * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
                 * Enable inline JS: add 'unsafe-inline' to default-src
         -->
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: http://*.tile.osm.org http://router.project-osrm.org/viaroute 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *; img-src * data: http://*.tile.osm.org http://router.project-osrm.org/viaroute">
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
@@ -38,9 +39,10 @@
         <script src="js/leaflet-src.js"></script>
         <script src="js/leaflet-routing-machine.js"></script>
         <script src="js/pixoutmap.js"></script>
+        <script src="js/poplace.js"></script>
         <title>PixOut</title>
     </head>
-    <body onload="onLoad()">
+    <body>
         <div class="app">
             <div id="map"></div>
 
