@@ -4,10 +4,12 @@ var POMap = {
     icon: null,
 
     init: function(center) {
-         this.map = L.map('map', {
+        this.map = L.map('map', {
             center: center,
             zoom: 12
-        }).zoomControl.setPosition("topright");
+        });
+        
+        this.map.zoomControl.setPosition("topright");
 
         L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {}).addTo(this.map);
 
