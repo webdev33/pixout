@@ -1,57 +1,61 @@
-function onLoad() {
-    local();
+document.addEventListener("deviceready", onDeviceReady, false);
+var image;
+var position;
+var storage;
+
+function onDeviceReady() {
+    //console.log("ready");
+//    POMap.init([48.3, 2.4]);
+//    POMap.addPoint("test", [48.31, 2.42], "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQE..........ASABIAAD/2wAGADABg D//Z");
+		if(typeof(window.localStorage) != 'undefined'){
+			storage = window.localStorage.getItem("photos");
+      if(typeof(storage) == 'undefined'){
+			  window.localStorage.setItem("photos", []);
+      }
+      else {
+        image = document.getElementById('myImage');
+        image.src = "data:image/jpeg;base64," + imageData;
+    		throw "photos already defined";
+      }
+		}
+		else{
+			throw "window.localStorage, not defined";
+		}
 }
 
-function local() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(localized, local_erreur, { enableHighAccuracy: true });
-    } else {
-        alert("Votre navigateur ne prend pas en compte la géolocalisation HTML5");
-        localized({ coords: {latitude:48.42, longitude:2.78}});
-    }
+function takePicture() {
+  navigator.camera.getPicture(onSuccess, onFail, {
+    quality : 75,
+    destinationType : Camera.DestinationType.DATA_URL,
+    sourceType : Camera.PictureSourceType.CAMERA,
+    allowEdit : true,
+    encodingType: Camera.EncodingType.JPEG,
+    targetWidth: 100,
+    targetHeight: 100,
+    popoverOptions: CameraPopoverOptions,
+    saveToPhotoAlbum: true,
+  });
 }
 
-function local_erreur(error) {
-    switch (error.code) {
-        case error.UNKNOWN_ERROR:
-            alert("La geolocation a rencontré une erreur.");
-            break;
-        case error.PERMISSION_DENIED:
-            alert("Vous n'avez pas autorisé l'accès à votre position.");
-            break;
-        case error.POSITION_UNAVAILABLE:
-            alert("Vous n'avez pas pu être localisé.");
-            break;
-        case error.TIMEOUT:
-            alert("La geolocation prend trop de temps.");
-            break;
-    }
-    localized({ coords: { latitude: 48.42, longitude: 2.78 } });
+function onSuccess(imageData) {
+    image = document.getElementById('myImage');
+    image.src = "data:image/jpeg;base64," + imageData;
+    navigator.geolocation.getCurrentPosition(onSuccessLocation, onErrorLocation);
 }
 
-function localized(position) {
-    POMap.init([position.coords.latitude, position.coords.longitude]);
-    POMap.addPoint("point 1", [48.40, 2.3], "photo.png");
-    POMap.addPoint("point 2", [48.44, 2.5], "photo.png");
-    POMap.addPoint("point 3", [48.34, 2.4], "photo.png");
-    POMap.addPoint("point 4", [48.384, 2.43], "photo.png");
-    POMap.addPoint("point 5", [48.30, 2.4], "photo.png");
-    POMap.addPoint("point 6", [48.20, 2.3], "photo.png");
-
-    POMap.addEventHandler("click", selectBeginning);
+function onFail(message) {
+    alert('Failed because: ' + message);
 }
 
-var beginning, end;
-function selectBeginning(e) {
-    beginning = e.latlng;
-    POMap.removeEventHandler("click", selectBeginning);
-    POMap.addEventHandler("dblclick", selectEnd);
-}
+var onSuccessLocation = function(position) {
+  position = [position.coords.latitude, position.coords.longitude];
+  alert('latitude: ' + position[0] + ' et longitude: ' + position[1]);
+  storage.push([position, image]);
+  window.localStorage.setItem("photos",storage);
+  console.log(storage[0][1]);
+};
 
-function selectEnd(e) {
-    end = e.latlng;
-    POMap.removeEventHandler("dblclick", selectEnd);
-    POMap.addEventHandler("click", selectBeginning);
-    POMap.addTrip(beginning, end);
+function onErrorLocation(error) {
+    alert('code: '    + error.code    + '\n' +
+          'message: ' + error.message + '\n');
 }
-

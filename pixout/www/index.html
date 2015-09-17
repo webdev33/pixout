@@ -42,12 +42,16 @@
         <script src="js/poplace.js"></script>
         <title>PixOut</title>
     </head>
-    <body onload="onLoad()">
+    <body>
         <div class="app">
             <div id="map"></div>
 
             <div id="stock" class="hidden">
                 <img id="photo" src="img/photo.png" />
+            </div>
+            <div id="testPhoto">
+              <button onclick="takePicture();">Picture</button>
+              <img style="width:100px;height:100px;" id="myImage" src="" />
             </div>
         </div>
         <script type="text/javascript" src="cordova.js"></script>

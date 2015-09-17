@@ -58,4 +58,3 @@ function addPoint(e) {
     linedata.push(e.latlng);
     line.addLatLng(e.latlng);
 }
-
