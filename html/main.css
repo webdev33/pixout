@@ -75,11 +75,11 @@ nav {
     left: 38%;
 }
 
-.circle-go {
+#circle-go {
     background-image: url(img/bouton-go.svg);
 }
 
-.circle-camera {
+#circle-camera {
     background-image: url(img/camera.svg);
 }
 
@@ -97,11 +97,11 @@ nav {
     margin-right: 5px;
 }
 
-.icon-profil {
+#icon-profil {
     background-image: url(img/icon-profil.svg);
 }
 
-.icon-stop {
+#icon-stop {
     background-image: url(img/icon-square.svg);
 }
 
