@@ -121,11 +121,11 @@ nav {
     padding: 0 5px;
 }
 
-.profil {
+#bouton-left {
     float: left;
 }
 
-.itineraire {
+#bouton-right {
     float: right;
 }
 
@@ -148,7 +148,7 @@ nav {
     background-image: url(img/camera.svg);
 }
 
-.circle-upload {
+#circle-upload {
     background-image: url(img/upload.svg);
 }
 
@@ -170,7 +170,7 @@ nav {
     background-image: url(img/icon-square.svg);
 }
 
-.icon-cancel {
+#icon-cancel {
     background-image: url(img/icon-cancel.svg);
 }
 
@@ -192,7 +192,12 @@ nav {
     height: 150px;
 }
 
-.image {
+.img-contener {
+    margin-top: -40px;
+}
+
+
+.img {
     width: 100%;
     height: auto;
     margin-bottom: -2px;
@@ -202,23 +207,36 @@ nav {
     background-position: center center;
     background-size: contain;
     background-repeat: no-repeat;
-    width: 20px;
-    height: 20px;
+    width: 40px;
+    height: 40px;
+    position: relative;
+    top: 50px;
+    opacity: 0.8;
 }
 
 .action-cancel {
     background-image: url(img/action-cancel.svg);
     float: left;
+    left: 10px;
 }
 
 .action-validate {
     background-image: url(img/action-validate.svg);
     float: right;
+    right: 10px;
 }
 
 .last {
     width: 100%;
     height: 90px;
+}
+
+#hidden {
+    display: none;
+}
+
+#visible {
+    display: block;
 }
 
 
