@@ -28,6 +28,7 @@
             * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
                 * Enable inline JS: add 'unsafe-inline' to default-src
         -->
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: http://*.tile.osm.org http://router.project-osrm.org/viaroute 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *; img-src * data: http://*.tile.osm.org http://router.project-osrm.org/viaroute">
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
@@ -38,20 +39,43 @@
         <script src="js/leaflet-src.js"></script>
         <script src="js/leaflet-routing-machine.js"></script>
         <script src="js/pixoutmap.js"></script>
+        <script src="js/poplace.js"></script>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800,300' rel='stylesheet' type='text/css'>
         <title>PixOut</title>
     </head>
-    <body onload="onLoad()">
-        <div class="app">
-            <div id="map"></div>
+    <body>
+      <div class="content">
+          <div class="logo"></div>
+          <div class="app">
+              <div id="map"></div>
+              <div id="testPhoto">
+                <button onclick="takePicture();">Picture</button>
+                <img style="width:100px;height:100px;" id="myImage" src="" />
+              </div>
+          </div>
+          <nav>
+             <a href="#">
+                  <div class="bouton profil">
+                     <div class="click click-left">
+                          <div class="icon icon-profil"></div>
+                          <h2>PROFIL</h2>
+                      </div>
+                  </div>
+              </a>
+              <a href="#">
+                  <div class="circle circle-go"></div>
+              </a>
+              <a href="#">
+                  <div class="bouton itineraire">
+                     <div class="click click-right">
+                          <div class="icon icon-itineraire"></div>
+                          <h2>ITINERAIRE</h2>
+                      </div>
+                  </div>
+              </a>
+           </nav>
+      </div> <!--content-->
 
-            <div id="stock" class="hidden">
-                <img id="photo" src="img/photo.png" />
-            </div>
-            <div id="testPhoto">
-              <button onclick="takePicture();">Picture</button>
-              <img style="width:100px;height:100px;" id="myImage" src="" />
-            </div>
-        </div>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
     </body>

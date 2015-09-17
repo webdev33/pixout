@@ -1,60 +1,61 @@
-var map;
-var icon;
-var linedata;
-var line;
+var POMap = {
+    map: null,
+    places: [],
+    icon: null,
 
-function local() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(initMap, erreur, {enableHighAccuracy: true});
-    } else {
-        alert("Votre navigateur ne prend pas en compte la géolocalisation HTML5");
+    init: function(center) {
+         this.map = L.map('map', {
+            center: center,
+            zoom: 12
+        }).zoomControl.setPosition("topright");
+
+        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {}).addTo(this.map);
+
+        this.icon = L.icon({ iconUrl: "css/images/map-512.png", iconeSize: [16, 16] });
+        this.popup = L.popup(photo);
+    },
+
+    addPoint: function (name, latlng, url) {
+        this.places.push(new POPlace(name, latlng, url));
+        L.marker(latlng, { icon: this.icon }).addEventListener("click", this.markerClickHandler).bindPopup(this.popup).addTo(this.map).url = url;
+    },
+
+    addEventHandler: function(event, handler) {
+        this.map.addEventListener(event, handler);
+    },
+    removeEventHandler: function(event, handler) {
+        this.map.removeEventListener(event, handler);
+    },
+
+    markerClickHandler:function(e) {
+        document.getElementById("photo").src = e.originalEvent.currentTarget.popup;
+    },
+
+    addTrip: function (beginning, end) {
+        var waypoints = [beginning];
+        var p;
+        var lat, lng;
+        for (var i = 0; i < this.places.length; i++) {
+            lat = this.places[i].latlng[0];
+            lng = this.places[i].latlng[1];
+            if (((beginning.lat < lat && lat < end.lat) || (beginning.lat > lat && lat > end.lat)) && ((beginning.lng < lng && lng < end.lng) || (beginning.lng > lng && lng > end.lng)))
+                waypoints.push(this.places[i].latlng);
+        }
+        waypoints.push(end);
+
+        L.Routing.control({
+            router: L.Routing.osrm({ serviceUrl: "http://router.project-osrm.org/viaroute" }),
+            waypoints: waypoints
+        }).addTo(this.map);
     }
-}
+};
 
-function erreur(error) {
-    switch (error.code) {
-    case error.UNKNOWN_ERROR:
-        alert("La geolocation a rencontré une erreur.");
-        break;
-    case error.PERMISSION_DENIED:
-        alert("Vous n'avez pas autorisé l'accès à votre position.");
-        break;
-    case error.POSITION_UNAVAILABLE:
-        alert("Vous n'avez pas pu être localisé.");
-        break;
-    case error.TIMEOUT:
-        alert("La geolocation prend trop de temps.");
-        break;
-    }
-}
-
-function initMap(position) {
-    map = L.map('map', {
-        center: [position.coords.latitude, position.coords.longitude],
-        zoom: 16
-    });
-
-    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png?{foo}', { foo: 'bar' }).addTo(map);
-
-    icon = L.icon({ iconUrl: "css/images/map-512.png", iconeSize: [1, 1] });
-    linedata = Array();
-    line = L.polyline(linedata, { color: 'red' }).addTo(map);
-    L.marker([position.coords.latitude, position.coords.longitude], { icon: icon }).bindPopup(photo, {}).addTo(map);
-
-    map.addEventListener("click", addPoint);
-
-
-    L.Routing.control({
-        router: L.Routing.osrm({ serviceUrl:"http://router.project-osrm.org/viaroute"} ),
-        waypoints: [
-          L.latLng(48.40, 2.3),
-          L.latLng(48.90, 2.6)
-        ]
-    }).addTo(map);
-}
-
-function addPoint(e) {
+/*
+        linedata = Array();
+        line = L.polyline(linedata, { color: 'red' }).addTo(this.map);
     L.marker(e.latlng, { icon: icon }).bindPopup(photo, {}).addTo(map);
     linedata.push(e.latlng);
     line.addLatLng(e.latlng);
-}
+<<<<<<< HEAD
+        */
+

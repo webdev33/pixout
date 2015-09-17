@@ -3,26 +3,46 @@ var image;
 var position;
 var storage;
 
-function onLoad() {
-    local();
+if(typeof(window.localStorage) != 'undefined'){
+  storage = JSON.parse(window.localStorage.getItem("photos"));
+  if(!storage){
+    storage = [];
+  }
+}
+else{
+  storage = [];
 }
 
 function onDeviceReady() {
     //console.log("ready");
-		if(typeof(window.localStorage) != 'undefined'){
-			storage = window.localStorage.getItem("photos");
-      if(typeof(storage) == 'undefined'){
-			  window.localStorage.setItem("photos", []);
-      }
-      else {
-        image = document.getElementById('myImage');
-        image.src = "data:image/jpeg;base64," + imageData;
-    		throw "photos already defined";
-      }
-		}
-		else{
-			throw "window.localStorage, not defined";
-		}
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(localized, locerreur, {enableHighAccuracy: true});
+    } else {
+        alert("Votre navigateur ne prend pas en compte la géolocalisation HTML5");
+        POMap.init([48.3, 2.4]);
+    }
+}
+
+function localized(position) {
+  POMap.init([position.coords.latitude, position.coords.longitude]);
+}
+
+function locerreur(error) {
+    switch (error.code) {
+    case error.UNKNOWN_ERROR:
+        alert("La geolocation a rencontré une erreur.");
+        break;
+    case error.PERMISSION_DENIED:
+        alert("Vous n'avez pas autorisé l'accès à votre position.");
+        break;
+    case error.POSITION_UNAVAILABLE:
+        alert("Vous n'avez pas pu être localisé.");
+        break;
+    case error.TIMEOUT:
+        alert("La geolocation prend trop de temps.");
+        break;
+    }
+    POMap.init([48.3, 2.4]);
 }
 
 function takePicture() {
@@ -42,6 +62,8 @@ function takePicture() {
 function onSuccess(imageData) {
     image = document.getElementById('myImage');
     image.src = "data:image/jpeg;base64," + imageData;
+    image = "data:image/jpeg;base64," + imageData;
+    console.log(storage);
     navigator.geolocation.getCurrentPosition(onSuccessLocation, onErrorLocation);
 }
 
@@ -51,13 +73,17 @@ function onFail(message) {
 
 var onSuccessLocation = function(position) {
   position = [position.coords.latitude, position.coords.longitude];
-  alert('latitude: ' + position[0] + ' et longitude: ' + position[1]);
+  console.log('latitude: ' + position[0] + ' et longitude: ' + position[1]);
+  if (!storage) {
+    storage = [];
+    console.log("coin");
+  }
   storage.push([position, image]);
-  window.localStorage.setItem("photos",storage);
-  console.log(storage[0][1]);
+  window.localStorage.setItem("photos",JSON.stringify(storage));
+  POMap.addPoint("Marqueur", position, image);
 };
 
 function onErrorLocation(error) {
-    alert('code: '    + error.code    + '\n' +
+    console.log('code: '    + error.code    + '\n' +
           'message: ' + error.message + '\n');
 }
