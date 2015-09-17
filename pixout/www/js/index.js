@@ -3,6 +3,7 @@ var image;
 var position;
 var storage;
 var waypoints = [];
+var watchID;
 
 if(typeof(window.localStorage) != 'undefined'){
   storage = JSON.parse(window.localStorage.getItem("photos"));
@@ -117,8 +118,9 @@ function gotrip() {
 
     // Options: throw an error if no update is received every 30 seconds.
     //
-    var watchID = navigator.geolocation.watchPosition(onSuccess, onError, { timeout: 30000 });
-
+    watchID = navigator.geolocation.watchPosition(onSuccess, onError, { timeout: 30000 });
 
 }
-
+function stopTrip(){
+  navigator.geolocation.clearWatch(watchID);
+}
