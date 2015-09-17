@@ -40,20 +40,42 @@
         <script src="js/leaflet-routing-machine.js"></script>
         <script src="js/pixoutmap.js"></script>
         <script src="js/poplace.js"></script>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800,300' rel='stylesheet' type='text/css'>
         <title>PixOut</title>
     </head>
     <body>
-        <div class="app">
-            <div id="map"></div>
+      <div class="content">
+          <div class="logo"></div>
+          <div class="app">
+              <div id="map"></div>
+              <div id="testPhoto">
+                <button onclick="takePicture();">Picture</button>
+                <img style="width:100px;height:100px;" id="myImage" src="" />
+              </div>
+          </div>
+          <nav>
+             <a href="#">
+                  <div class="bouton profil">
+                     <div class="click click-left">
+                          <div class="icon icon-profil"></div>
+                          <h2>PROFIL</h2>
+                      </div>
+                  </div>
+              </a>
+              <a href="#">
+                  <div class="circle circle-go"></div>
+              </a>
+              <a href="#">
+                  <div class="bouton itineraire">
+                     <div class="click click-right">
+                          <div class="icon icon-itineraire"></div>
+                          <h2>ITINERAIRE</h2>
+                      </div>
+                  </div>
+              </a>
+           </nav>
+      </div> <!--content-->
 
-            <div id="stock" class="hidden">
-                <img id="photo" src="img/photo.png" />
-            </div>
-            <div id="testPhoto">
-              <button onclick="takePicture();">Picture</button>
-              <img style="width:100px;height:100px;" id="myImage" src="" />
-            </div>
-        </div>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
     </body>
