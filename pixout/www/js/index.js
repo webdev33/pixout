@@ -2,6 +2,7 @@ document.addEventListener("deviceready", onDeviceReady, false);
 var image;
 var position;
 var storage;
+var waypoints = [];
 
 if(typeof(window.localStorage) != 'undefined'){
   storage = JSON.parse(window.localStorage.getItem("photos"));
@@ -25,6 +26,7 @@ function onDeviceReady() {
         camera = document.getElementById("circle-camera");
         circle.removeAttribute("onclick");
         camera.onclick = takePicture;
+        gotrip();
     }
 
     if (navigator.geolocation) {
@@ -97,3 +99,26 @@ function onErrorLocation(error) {
     console.log('code: '    + error.code    + '\n' +
           'message: ' + error.message + '\n');
 }
+function gotrip() {
+    function onSuccess(position) {
+        var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+            waypoints.push([position.coords.latitude, position.coords.longitude]);
+            if (waypoints.length % 10 == 0) {
+                POMap.setTrip(waypoints);
+            };
+    }
+
+    // onError Callback receives a PositionError object
+    //
+    function onError(error) {
+        console.log("une erreur est survenue");
+    }
+
+    // Options: throw an error if no update is received every 30 seconds.
+    //
+    var watchID = navigator.geolocation.watchPosition(onSuccess, onError, { timeout: 30000 });
+
+
+}
+

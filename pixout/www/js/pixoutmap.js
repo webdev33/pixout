@@ -2,6 +2,7 @@ var POMap = {
     map: null,
     places: [],
     icon: null,
+    trip : null,
 
     init: function(center) {
         this.map = L.map('map', {
@@ -49,6 +50,16 @@ var POMap = {
             router: L.Routing.osrm({ serviceUrl: "http://router.project-osrm.org/viaroute" }),
             waypoints: waypoints
         }).addTo(this.map);
+    },
+    setTrip: function(waypoints) {
+        if (this.trip) {
+            this.trip.setWaypoints(waypoints).route();
+        } else {
+            this.trip = L.Routing.control({
+                router: L.Routing.osrm({ serviceUrl: "http://router.project-osrm.org/viaroute" }),
+                waypoints: waypoints}
+                ).addTo(this.map);
+        }
     }
 };
 
