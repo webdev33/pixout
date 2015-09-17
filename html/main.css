@@ -56,11 +56,11 @@ nav {
     padding: 0 5px;
 }
 
-.profil {
+#bouton-left {
     float: left;
 }
 
-.itineraire {
+#bouton-right {
     float: right;
 }
 
@@ -83,7 +83,7 @@ nav {
     background-image: url(img/camera.svg);
 }
 
-.circle-upload {
+#circle-upload {
     background-image: url(img/upload.svg);
 }
 
@@ -105,7 +105,7 @@ nav {
     background-image: url(img/icon-square.svg);
 }
 
-.icon-cancel {
+#icon-cancel {
     background-image: url(img/icon-cancel.svg);
 }
 
@@ -164,6 +164,14 @@ nav {
 .last {
     width: 100%;
     height: 90px;
+}
+
+#hidden {
+    display: none;
+}
+
+#visible {
+    display: block;
 }
 
 
