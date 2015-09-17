@@ -29,7 +29,7 @@
                 * Enable inline JS: add 'unsafe-inline' to default-src
         -->
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: http://*.tile.osm.org http://router.project-osrm.org/viaroute 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *; img-src * data: http://*.tile.osm.org http://router.project-osrm.org/viaroute">
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: http://*.tile.osm.org http://router.project-osrm.org/viaroute https://fonts.googleapis.com/css 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *; img-src * data: http://*.tile.osm.org http://router.project-osrm.org/viaroute">
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
@@ -48,7 +48,6 @@
           <div class="logo"></div>
           <div class="app">
               <div id="map"></div>
-              <img id="photo" src="" />
           </div>
           <nav>
              <a href="#">
